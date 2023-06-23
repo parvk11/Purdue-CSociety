@@ -17,7 +17,6 @@ clean:
 	rm -f run *.o
 
 git-commit:
-	git checkout
 	git add *.c *.h Makefile >> .local.git.out || echo
 	git commit -a -m 'Automatic commit $(DATE)' >> .local.git.out || echo
 
