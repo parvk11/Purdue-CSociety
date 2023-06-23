@@ -4,10 +4,8 @@ SOURCES = server.c server_util.c server_rules.c
 OBJECTS = $(SOURCES:.c=.o)
 HFILES = $(SOURCES:.c=.h)
 EXEC = run
-
-all: $(EXEC)
-	@make clean
-	@make $(EXEC)
+DATE = $(shell date +%Y%m%d-%H:%M:%S)
+all: clean $(EXEC) git-commit
 
 $(EXEC): $(OBJECTS)
 	gcc $(CFLAGS) -o $@ $^
@@ -16,6 +14,15 @@ $(OBJECTS): $(SOURCES)
 	gcc $(CFLAGS) -c $^
 
 clean:
-	rm run *.o
+	rm -f run *.o
+
+git-commit:
+	git checkout
+	git add *.c *.h Makefile >> .local.git.out || echo
+	git commit -a -m 'Automatic commit $(DATE)' >> .local.git.out || echo
+	git push origin master
+
 
 .PHONY: clean
+.PHONY: all
+.PHONY: $(EXEC)
