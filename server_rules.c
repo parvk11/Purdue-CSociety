@@ -85,15 +85,24 @@ int randomChoice( int playerOne, int playerTwo ) {
 			break;
 		}
 		p2Buff[p2Read] = '\0';
+		char * buffToWrite;
 
-		int p1Write = write(playerOne, p2Buff, p2Read);
+		if ( (rand() % 1) == 0 ) {
+			//strncpy(p1Buff, buffToWrite, MAXBUFFERSIZE);
+			buffToWrite = p1Buff;
+		} else {
+			//strncpy(p2Buff, buffToWrite, MAXBUFFERSIZE);
+			buffToWrite = p2Buff;
+		}
+
+		int p1Write = write(playerOne, buffToWrite, p2Read);
 		if (p1Write <= 0) { //connection failed
 			write(playerTwo, "ERROR: Player Disconnected", 26);
 			//Thought : set an error bit and do all error writing in a dff function?
 			break;
 		}
 
-		int p2Write = write(playerTwo, p1Buff, p1Read);
+		int p2Write = write(playerTwo, buffToWrite, p1Read);
 		if (p2Write <= 0) { //connection failed
 			write(playerOne, "ERROR: Player Disconnected", 26);
 			//Thought : set an error bit and do all error writing in a dff function?
