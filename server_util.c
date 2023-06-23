@@ -53,8 +53,8 @@ inline void setLobbyPTwoDC( lobby * lobby ) {
 
 void setLobbyMessagingRules( lobby * lobby ) {
 	switch ( getLobbyGameType( lobby ) ) {
-		case 2:
-			lobby->messageRules = loganTest;
+		case 5:
+			lobby->messageRules = randomChoice;
 		default:
 			lobby->messageRules = relay;
 	}
