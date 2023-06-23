@@ -55,6 +55,7 @@ void setLobbyMessagingRules( lobby * lobby ) {
 	switch ( getLobbyGameType( lobby ) ) {
 		case 5:
 			lobby->messageRules = randomChoice;
+			break;
 		default:
 			lobby->messageRules = relay;
 	}
