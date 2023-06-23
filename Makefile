@@ -22,7 +22,12 @@ git-commit:
 	git commit -a -m 'Automatic commit $(DATE)' >> .local.git.out || echo
 	#git push origin master
 
+push-remote:
+	git checkout
+	git push -u origin main
 
 .PHONY: clean
 .PHONY: all
 .PHONY: $(EXEC)
+.PHONY: git-commit
+.PHONY: push-remote
