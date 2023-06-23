@@ -20,7 +20,7 @@ git-commit:
 	git checkout
 	git add *.c *.h Makefile >> .local.git.out || echo
 	git commit -a -m 'Automatic commit $(DATE)' >> .local.git.out || echo
-	git push origin master
+	#git push origin master
 
 
 .PHONY: clean
