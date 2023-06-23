@@ -4,6 +4,7 @@
 int serverSock;
 lobby lobbies[MAXLOBBIES];
 
+
 int main(int argc, char** argv) {
 	
 	int port = PORTNUM;
