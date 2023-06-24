@@ -10,6 +10,5 @@ Purdue computer society chapter general project github
 
 # Error Message
 
-<h1>FORMAT</h1>
-REJECTED: <message>
+REJECTED: \<message\>
 
