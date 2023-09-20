@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/WebComponents/Ico/favicon.ico">
+    <link rel="stylesheet" href="/WebComponents/Templates/inputs.css">
+    <script type="text/javascript" src="/WebComponents/Templates/tools.js"></script>
+    <title>Create Wiki</title>
+
+    <!-- HTMX INSTALL -->
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+
+  </head>
+  <body>
+    <a href="/home/"><button>Home</button></a>
+    <div id="errorMessage"></div>
+    <input type="text" name="heading" value="" class="heading" placeholder="Wiki Title">
+    <button type="button" name="button" class="ignore" onclick="insertSection()">Add Section</button>
+    <button type="button">Submit</button>
+  </body>
+</html>
