@@ -28,33 +28,25 @@ func ( n *Node ) addChild( c *Node ) {
 //Emitters to be assigned at creation
 func emitSection( c *Node ) string {
   var str string = "<section class='section'>"
-  for _, value := range c.children {
-    str += value.emitHTML( value )
-  }
+  //add children content here
   str += "</section>"
   return str
 }
 func emitDiv( c *Node ) string {
   var str string = "<div class='container'><button class='ignore' onClick= 'this.parentNode.appendChild(CreateParagraph())'>Add Paragraph</button><button class='ignore' onClick= 'this.parentNode.appendChild(CreateList())' }>Add List</button>"
-  for _, value := range c.children {
-    str += value.emitHTML( value )
-  }
+//add children content here
   str += "</div>"
   return str
 }
 func emitUl( c *Node ) string {
   var str string = "<ul class='list'><button class='ignore' onClick= 'this.parentNode.appendChild(CreateItem())' }>Add Item</button>"
-  for _, value := range c.children {
-    str += value.emitHTML( value )
-  }
+//add children content here
   str += "</ul>"
   return str
 }
 func emitBody( c *Node ) string {
   var str string = ""
-  for _, value := range c.children {
-    str += value.emitHTML( value )
-  }
+//add children content here
   return str
 }
 

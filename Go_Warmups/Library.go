@@ -11,7 +11,6 @@ import (
 // implement a way to insert a book into the library (if it doesn't exist)
 // implement a way to print each book in the library
 // implement a way to return a map of books by the author (i.e. the key is the author's name and the value is all books they've written)
- 
 
 
 type Book struct {

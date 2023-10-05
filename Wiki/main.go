@@ -2,12 +2,12 @@ package main
 
 import (
   "fmt" //for formatting messages to the console
-  // "net/http" //for web service
-  // "log" //logging errors
-  // "errors" //creating new errors
-  // "os" //reading and writing files
-  // "html/template" //for generating the page HTML
-  // "strconv" //converting status codes to string
+  "net/http" //for web service
+  //"log" //logging errors
+  "errors" //creating new errors
+  "os" //reading and writing files
+  "html/template" //for generating the page HTML
+  //"strconv" //converting status codes to string
 )
 
 //Structure to represent each wiki page
@@ -19,8 +19,8 @@ type WikiPage struct {
   HTMLContent template.HTML //public
 }
 
-var FileNotFound *WikiPage
-var ErrorOccur *WikiPage
+var FileNotFound *WikiPage // 404
+var ErrorOccur *WikiPage // 500 status
 
 //returns the WikiPage associated with the provided document name
 //If the DocName does not coorspond to a valid file, return the 404 WikiPage
@@ -34,14 +34,24 @@ func getErrorPage( statusCode int ) (*WikiPage, error) {
   return nil, nil
 }
 
-//
+//returns a WikiPage* associated with the provided file path
+// if the provided path does not exist, FileNotFound is returned instead
 func getFile( filePath string ) (*WikiPage, error) {
-  return nil, nil
+  body, err := os.ReadFile(filePath)
+  if ( err != nil ) {
+    return FileNotFound, err
+  }
+  return &WikiPage{ DocName: "temp", path: filePath, statusCode: 200, Content: body}, err
 }
 
 //writes the Content of the page to the file structure
+// errors.New("Page is empty")
 func writeWikiPage( page *WikiPage ) error {
-  return nil
+  if ( page == nil ) {
+    return errors.New("Page is nil")
+  }
+
+  return os.WriteFile(page.path, page.Content, 0666)
 }
 
 //you can leave this alone
@@ -87,11 +97,7 @@ func main() {
 
 
   fmt.Printf("Running...\n")
-
   //TODO:
   // Create handlers
-
   // Create listen and serve to start server
-
-
 }
