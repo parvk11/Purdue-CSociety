@@ -3,11 +3,11 @@ package main
 import (
   "fmt" //for formatting messages to the console
   "net/http" //for web service
-  //"log" //logging errors
+  "log" //logging errors
   "errors" //creating new errors
   "os" //reading and writing files
   "html/template" //for generating the page HTML
-  //"strconv" //converting status codes to string
+  "strconv" //converting status codes to string
 )
 
 //Structure to represent each wiki page
@@ -25,17 +25,28 @@ var ErrorOccur *WikiPage // 500 status
 //returns the WikiPage associated with the provided document name
 //If the DocName does not coorspond to a valid file, return the 404 WikiPage
 func getWikiPage( DocName string ) (*WikiPage, error) {
-  return nil, nil
+  var filePath string = "WebComponents/Documents/" +  DocName + ".csoc"
+  body, err := os.ReadFile(filePath)
+  if (err != nil) { //nil here means nothing wrong
+    return FileNotFound, err
+  }
+  return &WikiPage{DocName: DocName, path: filePath, statusCode: 200, Content: body}, err
 }
 
 //returns the WikiPage for error files
 //these exist in a different directory to not conflict with regular file names
 func getErrorPage( statusCode int ) (*WikiPage, error) {
-  return nil, nil
+  var filePath string = "WebComponents/Errors/" + strconv.Itoa(statusCode) + ".csoc"
+  body, err := os.ReadFile(filePath)
+  if (err != nil) { //nil here means nothing wrong
+    return ErrorOccur, err
+  }
+  return &WikiPage{DocName: strconv.Itoa(statusCode), path: filePath, statusCode: statusCode, Content: body}, err
 }
 
 //returns a WikiPage* associated with the provided file path
 // if the provided path does not exist, FileNotFound is returned instead
+// ***this will become defunct with getWikiPage creation***
 func getFile( filePath string ) (*WikiPage, error) {
   body, err := os.ReadFile(filePath)
   if ( err != nil ) {
@@ -58,13 +69,20 @@ func writeWikiPage( page *WikiPage ) error {
 //simply grabs the file specified by the request
 //needed for just general files needed by the web browser
 func getFileContents(writer http.ResponseWriter, request *http.Request) {
+
+  //fmt.Printf("%s\n", request.URL.Path)
+  //fmt.Printf("%s\n", request)
+
   var path string = request.URL.Path[1:]
   http.ServeFile( writer, request, path)
 }
 
 //viewing a wiki page
 func viewHandler(writer http.ResponseWriter, request *http.Request) {
-  getFileContents( writer, request )
+  var path string = request.URL.Path[ len("/view/"): ]
+  page, _ := getWikiPage(path)
+  //writer.WriteHeader( page.statusCode )
+  http.ServeFile( writer, request, page.path)
 }
 
 
@@ -100,4 +118,8 @@ func main() {
   //TODO:
   // Create handlers
   // Create listen and serve to start server
+
+  log.Fatal(http.ListenAndServe(":8000", nil) )
+
+
 }
