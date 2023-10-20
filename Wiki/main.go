@@ -82,7 +82,32 @@ func viewHandler(writer http.ResponseWriter, request *http.Request) {
   var path string = request.URL.Path[ len("/view/"): ]
   page, _ := getWikiPage(path)
   //writer.WriteHeader( page.statusCode )
-  http.ServeFile( writer, request, page.path)
+  //http.ServeFile( writer, request, page.path)
+
+  //check if user gave a bad Path (remember the field statusCode)
+  // if it is a bad path then template error.html
+    page.HTMLContent = template.HTML( page.Content )
+
+if ( page.statusCode != 200 ) {
+  parsedTemplate, _ := template.ParseFiles("WebComponents/Templates/error.html")
+  err := parsedTemplate.Execute( writer, page )
+
+  if err != nil {
+    log.Println("something bad happend")
+  }
+} else {
+  parsedTemplate, _ := template.ParseFiles("WebComponents/Templates/view.html")
+  err := parsedTemplate.Execute( writer, page )
+
+  if err != nil {
+    log.Println("something bad happend")
+  }
+}
+
+
+
+
+
 }
 
 
@@ -117,6 +142,8 @@ func main() {
   fmt.Printf("Running...\n")
   //TODO:
   // Create handlers
+  http.HandleFunc( "/", getFileContents )
+  http.HandleFunc( "/view/", viewHandler )
   // Create listen and serve to start server
 
   log.Fatal(http.ListenAndServe(":8000", nil) )

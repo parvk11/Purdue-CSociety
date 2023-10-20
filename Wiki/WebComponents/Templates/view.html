@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <link rel="shortcut icon" href="/WebComponents/Ico/favicon.ico">
     <link rel="stylesheet" href="/WebComponents/Templates/inputs.css">
-    <title></title>
+    <title>{{ .DocName }}</title>
 
     <!-- HTMX INSTALL -->
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
@@ -12,6 +12,8 @@
   <body>
     <a href="/home/"><button>Home</button></a>
     <a href="/edit/"><button>Edit</button></a>
+
+    {{ .HTMLContent }}
 
   </body>
 </html>
