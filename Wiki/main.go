@@ -129,7 +129,17 @@ func saveHandler( writer http.ResponseWriter, request *http.Request ) {
 
 
 //home screen
+// home screen should show a bulleted list of all available to view wiki pages
 func homeHandler( writer http.ResponseWriter, request *http.Request ) {
+  //TODO
+  //a way to get all the files in the Documents folder
+
+  //get a file name from a file descriptor, removing the .csoc file extension
+
+  //use the template home.html to display the page
+
+  //remember, setup some form of error handling to make your life easier
+
   return
 }
 
