@@ -15,7 +15,9 @@
     <h1>List of Wikis</h1>
     <a href="/new/"><button>Create</button></a>
     <ul>
-      <!-- create a list of <li><a></a></li> -->
+      {{ range . }}
+        <li><a href="/view/{{.}}">{{.}}</a></li>
+      {{ end }}
     </ul>
   </body>
 </html>
