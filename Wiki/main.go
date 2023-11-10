@@ -131,6 +131,7 @@ func saveHandler( writer http.ResponseWriter, request *http.Request ) {
 //home screen
 // home screen should show a bulleted list of all available to view wiki pages
 func homeHandler( writer http.ResponseWriter, request *http.Request ) {
+<<<<<<< HEAD
   //TODO
   
   //a way to get all the files in the Documents folder
@@ -153,6 +154,27 @@ func homeHandler( writer http.ResponseWriter, request *http.Request ) {
   //remember, setup some form of error handling to make your life easier
 
   return
+=======
+  //get all entries in the Documents directory
+  files, readErr := os.ReadDir("WebComponents/Documents")
+  if readErr != nil {
+    log.Fatal(readErr)
+    return
+  }
+  //prepare a slice to hold all of the resulting file names
+  var fileNames []string = make([]string, len(files), len(files) )
+  //insert the file names into fileNames
+  for index, file := range files {
+    var name string = file.Name()
+    fileNames[ index ] = name[0:len(name) - 5]
+  }
+  //execute the template to the user
+  parsedTemplate, _ := template.ParseFiles("WebComponents/Templates/home.html")
+  err := parsedTemplate.Execute(writer, fileNames)
+  if err != nil {
+     log.Println("Error executing template :", err)
+  }
+>>>>>>> 88de020fd127f8c9ea0ceac9f5b289b06067a557
 }
 
 func main() {
@@ -166,7 +188,11 @@ func main() {
   // Create handlers
   http.HandleFunc( "/", getFileContents )
   http.HandleFunc( "/view/", viewHandler )
+<<<<<<< HEAD
   http.HandleFunc("/home/", homeHandler)
+=======
+  http.HandleFunc( "/home/", viewHandler )
+>>>>>>> 88de020fd127f8c9ea0ceac9f5b289b06067a557
   // Create listen and serve to start server
 
   log.Fatal(http.ListenAndServe(":8000", nil) )

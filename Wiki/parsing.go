@@ -8,19 +8,20 @@ import (
 //for each type of node
 //Go does not have classes and we need polymorphism
 type Node struct {
-  tag string
-  value string
-  parent *Node
-  children []*Node
-  emitHTML func( *Node ) string
+  tag string  //the tag of the html element parsed
+  value string //if it is a terminal, this is the text between the opening and closing tags
+  parent *Node //the node/element that contains this node/element
+  children []*Node //if it is a container, these are the nodes/elements it contains
+  emitHTML func( *Node ) string //emit is synonymous with “print” or “convert to string” here
 }
+
 
 func createNode( tag string, parent *Node ) *Node {
   return nil
 }
 
-//this notation allows us to use a dot notation to call the function
-//i.e. n.addChild( c )
+//this notation allows us to use a dot notation to call the function addChild
+//ex. n.addChild( c )
 func ( n *Node ) addChild( c *Node ) {
   n.children = append(n.children, c)
 }
@@ -51,13 +52,13 @@ func emitBody( c *Node ) string {
 }
 
 func emitPara( t *Node ) string {
-  return "<textarea class='paragraph'>" + t.value + "</textarea>"
+  return "<textarea class='paragraph'>" + "</textarea>"
 }
 func emitHn( t *Node ) string {
-  return "<input type='text' class='heading' value='" + t.value + "'></input>"
+  return "<input type='text' class='heading' value='" + "'></input>"
 }
 func emitLi( t *Node ) string {
-  return "<input type='text' class='item' value='" + t.value + "'></input>"
+  return "<input type='text' class='item' value='" + "'></input>"
 }
 
 func wrapElement( emitted string ) string {
