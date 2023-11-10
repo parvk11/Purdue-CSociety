@@ -132,7 +132,19 @@ func saveHandler( writer http.ResponseWriter, request *http.Request ) {
 // home screen should show a bulleted list of all available to view wiki pages
 func homeHandler( writer http.ResponseWriter, request *http.Request ) {
   //TODO
+  
   //a way to get all the files in the Documents folder
+  entries, err := os.ReadDir("./WebComponents/Documents")
+  if err != nil {
+    log.Println("something bad happend")
+  }
+  
+  for i := 0; i< len(entries); i++ {
+    fmt.Println(entries[i].Name());
+   
+  }
+
+
 
   //get a file name from a file descriptor, removing the .csoc file extension
 
@@ -154,6 +166,7 @@ func main() {
   // Create handlers
   http.HandleFunc( "/", getFileContents )
   http.HandleFunc( "/view/", viewHandler )
+  http.HandleFunc("/home/", homeHandler)
   // Create listen and serve to start server
 
   log.Fatal(http.ListenAndServe(":8000", nil) )
